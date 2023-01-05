@@ -31,6 +31,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cstdint>
 #include "crypto/randomx/blake2/endian.h"
 
+//2023_01_05_yzs
+#define vcopyq_laneq_f64(a1, __b1, c1, __d1) __extension__ ({ \
+  float64x2_t __a1 = (a1); float64x2_t __c1 = (c1); \
+  float64_t __c2 = vgetq_lane_f64(__c1, __d1); \
+  vsetq_lane_f64(__c2, __a1, __b1); })
+
+//2023_01_05_yzs
+#define vcopyq_laneq_u64(a1, __b1, c1, __d1) __extension__ ({ \
+  uint64x2_t __a1 = (a1); uint64x2_t __c1 = (c1); \
+  uint64_t __c2 = vgetq_lane_u64(__c1, __d1); \
+  vsetq_lane_u64(__c2, __a1, __b1); })
+
+
 constexpr int32_t unsigned32ToSigned2sCompl(uint32_t x) {
 	return (-1 == ~0) ? (int32_t)x : (x > INT32_MAX ? (-(int32_t)(UINT32_MAX - x) - 1) : (int32_t)x);
 }
